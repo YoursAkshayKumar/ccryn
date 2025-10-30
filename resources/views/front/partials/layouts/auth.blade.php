@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <title>@yield('title', ' Central Council for Research in Yoga & Naturopathy (CCRYN)')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Central Council for Research in Yoga & Naturopathy (CCRYN)">
-    <meta name="keywords"
-        content="Central Council for Research in Yoga & Naturopathy (CCRYN)">
+    <meta name="description" content="Central Council for Research in Yoga & Naturopathy (CCRYN)">
+    <meta name="keywords" content="Central Council for Research in Yoga & Naturopathy (CCRYN)">
     <meta content="Central Council for Research in Yoga & Naturopathy (CCRYN)" name="author">
-    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}">
 
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">

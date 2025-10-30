@@ -24,15 +24,15 @@
                                     <h6 class="mb-0 fs-13">Total Students</h6>
                                 </div>
                                 <h4 class="fw-semibold fs-5 mb-0">
-                                    <span data-target="84573" data-duration="5" data-prefix="$">$84573</span>
+                                    <span data-target="84573" data-duration="5" data-prefix="$">84573</span>
                                 </h4>
                             </div>
-                            <div class="flex-shrink-0 text-end">
+                            <!-- <div class="flex-shrink-0 text-end">
                                 <div class="d-flex align-items-end justify-content-end gap-3">
                                     <span class="text-success"><i class="ri-arrow-right-up-line fs-12"></i>10.18%</span>
                                 </div>
                                 <div class="text-muted fs-12">+1.01% this week</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div id="totalSalesDashborad"></div>

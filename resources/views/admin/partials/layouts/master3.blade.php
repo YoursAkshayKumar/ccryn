@@ -10,7 +10,7 @@
     <meta name="keywords"
         content="Central Council for Research in Yoga & Naturopathy (CCRYN)">
     <meta content="Central Council for Research in Yoga & Naturopathy (CCRYN)" name="author">
-    <link rel="shortcut icon" href="{{ asset('assets/images/Favicon.png') }}">">
+    <link rel="shortcut icon" href="{{ asset('assets/images/Favicon.png') }}">
 
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="article">

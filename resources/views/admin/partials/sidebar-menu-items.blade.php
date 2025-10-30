@@ -22,9 +22,9 @@
             <li class="slide">
                 <a href="{{ url(env('ADMIN_URL_PREFIX'). '/applicants') }}" target="_blank" class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Applicants List</a>
             </li>
-            <li class="slide">
+            <!-- <li class="slide">
                 <a href="{{ url(env('ADMIN_URL_PREFIX'). '/upload-result') }}" target="_blank" class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Upload Results</a>
-            </li>
+            </li> -->
         </ul>
     </li>
 </ul>
