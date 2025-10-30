@@ -32,6 +32,7 @@ Route::group(['prefix' => env('ADMIN_URL_PREFIX')], function () {
   Route::post('/applicant-add', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'save'])->middleware('auth');
   Route::get('/applicant-edit/{id}', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'viewApplicantEditPage'])->middleware('auth');
   Route::post('/applicant-edit/{id}', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'update'])->middleware('auth');
+  Route::get('/applicant-delete/{id}', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'deleteApplicant'])->middleware('auth');
 
   Route::get('/applicant-upload-result/{id}', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'uploadResultView'])->middleware('auth');
   Route::post('/applicant-upload-result', [App\Http\Controllers\AdminControllers\ApplicantController::class, 'uploadResult'])->middleware('auth');

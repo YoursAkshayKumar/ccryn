@@ -204,7 +204,7 @@
                 {
                     render: function(data, type, row, meta) {
                         data = `<div class="hstack gap-2 fs-15">
-                                      <a href="{{ url(env('ADMIN_URL_PREFIX') . '/applicant-delete') }}/${row.applicant_id}" class="btn icon-btn-sm btn-light-danger delete-item">
+                                      <a href="{{ url(env('ADMIN_URL_PREFIX') . '/applicant-delete') }}/${row.applicant_id}" class="btn icon-btn-sm btn-light-danger delete-item" onclick="return confirm('Are you sure you want to delete this applicant?');">
                                         <i class="ri-delete-bin-line"></i>
                                     </a>
                                 </div>`;

@@ -84,11 +84,10 @@ class ApplicantController extends WebAppBaseController
     public function deleteApplicant($applicantId)
     {
         try {
-
             $objApplicant = new Applicant();
             $update = $objApplicant->remove($applicantId);
 
-            return $this->sendResponse('', 'User Deleted Successfully.', '/appplicants');
+            return redirect('/admin/applicants')->with('status', 'Applicant has been deleted.');
         } catch (\Exception $ex) {
             return $this->sendError($ex->getMessage(), $ex->getTrace(), 500);
         }
