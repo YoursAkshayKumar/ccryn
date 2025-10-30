@@ -1,0 +1,11 @@
+
+
+/* ==== Custom css for the website =======*/
+
+.app-sidebar-logo-default{
+    height: 75 !important;
+}
+
+label.error{
+    color: red !important;
+}

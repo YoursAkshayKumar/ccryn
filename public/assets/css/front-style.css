@@ -1,0 +1,19 @@
+.app-wrapper{
+    margin-inline-start: auto !important;
+}
+
+.app-header{
+    margin-inline-start: auto !important;
+    width: 100% !important;
+}
+
+.footer {
+    margin-inline-start: auto !important;
+}
+
+.avtar{
+    height: 60px !important;
+    width: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+}
