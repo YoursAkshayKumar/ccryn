@@ -48,6 +48,10 @@
                             <input type="text" name="application_no" value="{{ old('application_no', $applicant->application_no ?? '') }}" class="form-control">
                         </div>
                         <div class="col-md-4">
+                            <label>Password</label>
+                            <input type="text" name="password" class="form-control">
+                        </div>
+                        <div class="col-md-4">
                             <label>Applicant Name</label>
                             <input type="text" name="applicant_name" value="{{ old('applicant_name', $applicant->applicant_name ?? '') }}" class="form-control" required>
                         </div>

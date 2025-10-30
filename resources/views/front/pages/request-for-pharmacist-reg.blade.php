@@ -87,7 +87,7 @@
                             Form Submission Done
                         </td>
                         <td width="30%" class="text-center">
-                            <a href="#" class="btn btn-primary btn-sm px-3">
+                            <a href="{{ url('/view-applicant-details/'. $applicantId) }}" class="btn btn-primary btn-sm px-3">
                                 Download Application
                             </a>
                         </td>

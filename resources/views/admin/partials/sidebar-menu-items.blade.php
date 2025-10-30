@@ -20,10 +20,10 @@
         </a>
         <ul class="slide-menu" role="menu">
             <li class="slide">
-                <a href="{{ url(env('ADMIN_URL_PREFIX'). '/applicants') }}" target="_blank" class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Applicants List</a>
+                <a href="{{ url(env('ADMIN_URL_PREFIX'). '/applicants') }}"  class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Applicants List</a>
             </li>
             <!-- <li class="slide">
-                <a href="{{ url(env('ADMIN_URL_PREFIX'). '/upload-result') }}" target="_blank" class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Upload Results</a>
+                <a href="{{ url(env('ADMIN_URL_PREFIX'). '/upload-result') }}"  class="side-menu__item" role="menuitem" data-lang="hr-layout-horizontal">Upload Results</a>
             </li> -->
         </ul>
     </li>

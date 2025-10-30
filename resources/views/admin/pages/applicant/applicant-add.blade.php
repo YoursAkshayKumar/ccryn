@@ -30,11 +30,15 @@
             <div class="card mb-4">
                 <div class="card-header">Applicant Details</div>
                 <div class="card-body row g-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Application No</label>
                         <input type="text" name="application_no" class="form-control" required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <label>Password</label>
+                        <input type="text" name="password" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
                         <label>Applicant Name</label>
                         <input type="text" name="applicant_name" class="form-control" required>
                     </div>

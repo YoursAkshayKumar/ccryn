@@ -51,5 +51,6 @@ Route::get('/applicant-dashboard', [App\Http\Controllers\FrontControllers\HomeCo
 Route::get('/request-for-pharmacist-registration', [App\Http\Controllers\FrontControllers\HomeController::class, 'requestForPharmacistRegistration'])->middleware('auth:applicant');
 Route::get('/required-documents/{filename}', [App\Http\Controllers\FrontControllers\HomeController::class, 'downloadDocumentPdf'])->middleware('auth:applicant');
 Route::get('/view-application-status/{id}', [App\Http\Controllers\FrontControllers\HomeController::class, 'viewAppStatus'])->middleware('auth:applicant');
+Route::get('/view-applicant-details/{id}', [App\Http\Controllers\FrontControllers\HomeController::class, 'viewApplicantDetails'])->middleware('auth:applicant');
 
 

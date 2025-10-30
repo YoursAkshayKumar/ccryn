@@ -86,5 +86,14 @@ class HomeController extends WebAppBaseController
         }
     }
 
+    public function viewApplicantDetails($id)
+    {
+        $applicant = Applicant::with(['address', 'educations', 'internship', 'documents'])
+            ->findOrFail($id);
+
+        // Return to form view with existing data
+        return view('front.pages.show', compact('applicant'));
+    }
+
     //Home Controller
 }

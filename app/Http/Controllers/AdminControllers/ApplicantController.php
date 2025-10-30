@@ -117,7 +117,7 @@ class ApplicantController extends WebAppBaseController
                 ['application_no' => $request->application_no],
                 [
                     'applicant_name' => $request->applicant_name,
-                    'password' => Hash::make($request->application_no),
+                    'password' => Hash::make($request->password),
                     'gender' => $request->gender,
                     'dob' => $request->dob,
                     'place_of_birth' => $request->place_of_birth,
@@ -236,9 +236,15 @@ class ApplicantController extends WebAppBaseController
                 $signaturePath = $request->file('signature')->storePublicly('uploads/signatures', 'public');
             }
 
+            if($request->password != ''){
+                $password = Hash::make($request->application_no);
+            }else{
+                $password = $applicant->password;
+            }
+
             $applicant->update([
                 'applicant_name' => $request->applicant_name,
-                'password' => Hash::make($request->application_no),
+                'password' => $password,
                 'gender' => $request->gender,
                 'dob' => $request->dob,
                 'place_of_birth' => $request->place_of_birth,
@@ -420,7 +426,6 @@ class ApplicantController extends WebAppBaseController
 
         return view('admin.pages.applicant.applicant-update-registration-status', compact('applicant', 'statuses'));
     }
-
 
     public function updateApplicantStatusAction(Request $request, $id)
     {
