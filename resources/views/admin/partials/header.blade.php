@@ -4,6 +4,15 @@
     <div class="nav-header">
 
       <div class="header-left hstack gap-3">
+        <button type="button" class="btn btn-light-light icon-btn sidebar-toggle d-none d-md-block" aria-expanded="false" aria-controls="main-menu" fdprocessedid="79jduk">
+          <span class="visually-hidden">Toggle sidebar</span>
+          <i class="ri-menu-2-fill"></i>
+        </button>
+
+        <button class="btn btn-light-light icon-btn d-md-none small-screen-toggle" id="smallScreenSidebarLabel" type="button" data-bs-toggle="offcanvas" data-bs-target="#smallScreenSidebar" aria-controls="smallScreenSidebar" fdprocessedid="x2bnls">
+          <span class="visually-hidden">Sidebar toggle for mobile</span>
+          <i class="ri-arrow-right-fill"></i>
+        </button>
       </div>
 
       <div class="header-right hstack gap-3">
@@ -13,11 +22,11 @@
             <span class="position-relative">
               <span class="avatar-item avatar overflow-hidden">
                 @php
-                  if (Session::get('image') != '') {
-                    $mediaImage = url('assets/images/admin/profile/'. Session::get('image'));
-                  }else{
-                    $mediaImage = url('assets/images/avatar/dummy-avatar.jpg');
-                  }
+                if (Session::get('image') != '') {
+                $mediaImage = url('assets/images/admin/profile/'. Session::get('image'));
+                }else{
+                $mediaImage = url('assets/images/avatar/dummy-avatar.jpg');
+                }
                 @endphp
 
                 <img class="img-fluid" src="{{ $mediaImage }}" alt="avatar image">
@@ -30,9 +39,9 @@
             </span>
           </button>
 
-            @php
-              $adminId = Session::get('admin_id');
-            @endphp
+          @php
+          $adminId = Session::get('admin_id');
+          @endphp
 
           <div class="dropdown-menu dropdown$adminId-menu-end header-language-scrollable" aria-labelledby="accountNavbarDropdown">
             <a class="dropdown-item" href="{{ url(env('ADMIN_URL_PREFIX') . '/admin-profile/' . $adminId) }}">Profile</a>

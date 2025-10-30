@@ -285,7 +285,7 @@
                             <input type="hidden" name="documents[{{ $index }}][document_name]" value="{{ $doc }}">
                             @if($existing)
                             <p>
-                                <a href="{{ asset('storage/' . $existing->file_url) }}" target="_blank">View Existing</a>
+                                <a href="{{ asset($existing->file_url) }}" target="_blank">View Existing</a>
                             </p>
                             @endif
                             <input type="file" name="documents[{{ $index }}][file_url]" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
@@ -301,14 +301,14 @@
                         <div class="col-md-6">
                             <label>Photo</label>
                             @if(isset($applicant->photo_url))
-                            <div><img src="{{ asset('storage/' . $applicant->photo_url) }}" height="80"></div>
+                            <div><img src="{{ asset($applicant->photo_url) }}" height="80"></div>
                             @endif
                             <input type="file" name="photo" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label>Signature</label>
                             @if(isset($applicant->signature_url))
-                            <div><img src="{{ asset('storage/' . $applicant->signature_url) }}" height="50"></div>
+                            <div><img src="{{ asset($applicant->signature_url) }}" height="50"></div>
                             @endif
                             <input type="file" name="signature" class="form-control">
                         </div>

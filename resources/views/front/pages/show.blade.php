@@ -177,14 +177,14 @@
         <tbody>
             @foreach($applicant->educations as $edu)
             <tr>
-                <td>{{ $edu->qualification }}</td>
+                <td>{{ $edu->qualification_name }}</td>
                 <td>{{ $edu->examining_body }}</td>
                 <td>{{ $edu->institution_name }}</td>
                 <td>{{ $edu->course_start_year }}</td>
                 <td>{{ $edu->course_end_year }}</td>
-                <td>{{ $edu->max_marks }}</td>
+                <td>{{ $edu->maximum_marks }}</td>
                 <td>{{ $edu->obtained_marks }}</td>
-                <td>{{ $edu->percentage }}</td>
+                <td>{{ $edu->secured_percentage }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -219,7 +219,7 @@
             <tr>
                 <td>{{ $doc->document_name }}</td>
                 <td class="text-center">
-                    <a href="{{ asset('storage/' . $doc->file_url) }}" target="_blank">View</a>
+                    <a href="{{ asset($doc->file_url) }}" target="_blank">View</a>
                 </td>
             </tr>
             @endforeach
@@ -232,13 +232,13 @@
             <td class="text-center">
                 <p><strong>Photograph</strong></p>
                 @if($applicant->photo_url)
-                    <img src="{{ asset('storage/' . $applicant->photo_url) }}" height="120">
+                    <img src="{{ asset($applicant->photo_url) }}" height="120">
                 @endif
             </td>
             <td class="text-center">
                 <p><strong>Signature</strong></p>
                 @if($applicant->signature_url)
-                    <img src="{{ asset('storage/' . $applicant->signature_url) }}" height="60">
+                    <img src="{{ asset($applicant->signature_url) }}" height="60">
                 @endif
             </td>
         </tr>

@@ -21,10 +21,9 @@ class HomeController extends WebAppBaseController
     public function requestForPharmacistRegistration()
     {
         try {
-
             $applicantId = request()->session()->get('applicant_details')['applicant_id'];
-
             return view('front.pages.request-for-pharmacist-reg', ['applicantId' => $applicantId]);
+            
         } catch (\Exception $ex) {
             return $this->sendError($ex->getMessage(), $ex->getTrace(), 500);
         }

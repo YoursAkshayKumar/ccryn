@@ -152,7 +152,7 @@
                     render: function(data, type, row, meta) {
                         if (row.image != '') {
                             data =
-                                `<img src="{{ asset('storage') }}/${row.photo_url}" class="img-fluid img-admin-user">`
+                                `<img src="{{ asset('/') }}${row.photo_url}" class="img-fluid img-admin-user">`
                         } else {
                             if (row.gender == 'F') {
                                 data =

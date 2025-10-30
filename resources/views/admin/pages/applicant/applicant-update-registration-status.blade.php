@@ -47,7 +47,7 @@
                             <label>Upload Certificate/Document (if any)</label>
                             <input type="file" name="download_link" class="form-control">
                             @if($status->download_link)
-                                <a href="{{ asset('storage/' . $status->download_link) }}" target="_blank" class="btn btn-outline-success btn-sm mt-2">
+                                <a href="{{ asset($status->download_link) }}" target="_blank" class="btn btn-outline-success btn-sm mt-2">
                                     View Current File
                                 </a>
                             @endif

@@ -24,7 +24,7 @@
             </td>
             <td>
                 @if($step->download_link)
-                    <a href="{{ asset('storage/'.$step->download_link) }}" class="btn btn-success btn-sm">
+                    <a href="{{ asset($step->download_link) }}" class="btn btn-success btn-sm">
                         <i class="fa fa-download"></i> Download
                     </a>
                 @else

@@ -4,7 +4,7 @@
         <nav>
             <ol class="breadcrumb breadcrumb-arrow mb-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ url('index') }}">@yield('pagetitle')</a>
+                    <a href="{{ url('admin/dashboard') }}">@yield('pagetitle')</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">@yield('sub-title')</li>
             </ol>

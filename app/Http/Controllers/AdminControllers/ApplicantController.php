@@ -5,7 +5,6 @@ namespace App\Http\Controllers\AdminControllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
@@ -16,7 +15,6 @@ use App\Models\ApplicantAddress;
 use App\Models\ApplicantEducationQualification;
 use App\Models\ApplicantInternship;
 use App\Models\ApplicantUploadedDocument;
-use App\Models\ApplicantResult;
 
 
 class ApplicantController extends WebAppBaseController
@@ -105,13 +103,23 @@ class ApplicantController extends WebAppBaseController
 
         try {
             // 1️⃣ Applicant Details
-            $photoPath = $request->hasFile('photo')
-                ? $request->file('photo')->storePublicly('uploads/photos', 'public')
-                : null;
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+                $photoName = time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('uploads/photos'), $photoName);
+                $photoPath = 'uploads/photos/' . $photoName;
+            } else {
+                $photoPath = null;
+            }
 
-            $signaturePath = $request->hasFile('signature')
-                ? $request->file('signature')->storePublicly('uploads/signatures', 'public')
-                : null;
+            if ($request->hasFile('signature')) {
+                $signature = $request->file('signature');
+                $signatureName = time() . '_' . $signature->getClientOriginalName();
+                $signature->move(public_path('uploads/signatures'), $signatureName);
+                $signaturePath = 'uploads/signatures/' . $signatureName;
+            } else {
+                $signaturePath = null;
+            }
 
             $applicant = Applicant::updateOrCreate(
                 ['application_no' => $request->application_no],
@@ -196,7 +204,23 @@ class ApplicantController extends WebAppBaseController
             if ($request->documents && is_array($request->documents)) {
                 foreach ($request->documents as $doc) {
                     if (isset($doc['file_url']) && $doc['file_url'] instanceof \Illuminate\Http\UploadedFile) {
-                        $filePath = $doc['file_url']->storePublicly('uploads/documents', 'public');
+
+                        $file = $doc['file_url'];
+                        $fileName = time() . '_' . $file->getClientOriginalName();
+                        $destination = public_path('uploads/documents');
+
+                        // Create folder if missing
+                        if (!file_exists($destination)) {
+                            mkdir($destination, 0775, true);
+                        }
+
+                        // Move file to public/uploads/documents
+                        $file->move($destination, $fileName);
+
+                        // Save relative path (for use with asset())
+                        $filePath = 'uploads/documents/' . $fileName;
+
+                        // Create record
                         ApplicantUploadedDocument::create([
                             'applicant_id' => $applicant->applicant_id,
                             'document_name' => $doc['document_name'],
@@ -228,17 +252,23 @@ class ApplicantController extends WebAppBaseController
 
             $photoPath = $applicant->photo_url;
             if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->storePublicly('uploads/photos', 'public');
+                $photo = $request->file('photo');
+                $photoName = time() . '_' . $photo->getClientOriginalName();
+                $photo->move(public_path('uploads/photos'), $photoName);
+                $photoPath = 'uploads/photos/' . $photoName;
             }
 
             $signaturePath = $applicant->signature_url;
             if ($request->hasFile('signature')) {
-                $signaturePath = $request->file('signature')->storePublicly('uploads/signatures', 'public');
+                $signature = $request->file('signature');
+                $signatureName = time() . '_' . $signature->getClientOriginalName();
+                $signature->move(public_path('uploads/signatures'), $signatureName);
+                $signaturePath = 'uploads/signatures/' . $signatureName;
             }
 
-            if($request->password != ''){
+            if ($request->password != '') {
                 $password = Hash::make($request->application_no);
-            }else{
+            } else {
                 $password = $applicant->password;
             }
 
@@ -317,24 +347,39 @@ class ApplicantController extends WebAppBaseController
             // Update Uploaded Documents (reupload if new file provided)
             foreach ($request->documents as $index => $doc) {
                 if (isset($doc['file_url']) && $doc['file_url'] instanceof \Illuminate\Http\UploadedFile) {
-                    $filePath = $doc['file_url']->storePublicly('uploads/documents', 'public');
 
+                    $file = $doc['file_url'];
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $destination = public_path('uploads/documents');
+
+                    // Ensure the directory exists
+                    if (!file_exists($destination)) {
+                        mkdir($destination, 0775, true);
+                    }
+
+                    // Move the uploaded file
+                    $file->move($destination, $fileName);
+
+                    // Relative path for database (so you can use asset())
+                    $filePath = 'uploads/documents/' . $fileName;
+
+                    // Update existing record or create new one
                     ApplicantUploadedDocument::updateOrCreate(
                         [
                             'applicant_id' => $applicant->applicant_id,
-                            'document_name' => $doc['document_name']
+                            'document_name' => $doc['document_name'],
                         ],
-                        ['file_url' => $filePath]
+                        [
+                            'file_url' => $filePath,
+                        ]
                     );
                 }
             }
-
             DB::commit();
 
             return $this->sendResponse(array(
                 'userData' => $applicant
             ), 'Applicant form updated successfully', '/applicants');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->sendErrorJson('', $e->getMessage());
@@ -368,23 +413,39 @@ class ApplicantController extends WebAppBaseController
                 ->first();
 
             if ($existing) {
-                // Delete the old file from storage
-                if (\Storage::disk('public')->exists(str_replace('/storage/', '', $existing->result_file_url))) {
-                    \Storage::disk('public')->delete(str_replace('/storage/', '', $existing->result_file_url));
+                // Delete the old file from /public/uploads/results
+                $oldFilePath = public_path($existing->result_file_url);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
                 }
 
-                // Delete old row from database
+                // Delete old record from database
                 $existing->delete();
             }
 
-            // Store new file
-            $path = $request->file('result_file')->store('applicant_results', 'public');
+            // Upload and move new file to /public/uploads/results
+            if ($request->hasFile('result_file')) {
+                $file = $request->file('result_file');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $destination = public_path('uploads/results');
+
+                // Ensure directory exists
+                if (!file_exists($destination)) {
+                    mkdir($destination, 0775, true);
+                }
+
+                // Move the uploaded file
+                $file->move($destination, $fileName);
+
+                // Save relative path for DB
+                $path = 'uploads/results/' . $fileName;
+            }
 
             // Insert new record
             \App\Models\ApplicantResult::create([
                 'applicant_id' => $applicantId,
                 'result_title' => $request->result_title,
-                'result_file_url' => '/storage/' . $path,
+                'result_file_url' => $path,
                 'remarks' => $request->remarks,
                 'published_at' => now()
             ]);
@@ -429,9 +490,9 @@ class ApplicantController extends WebAppBaseController
 
     public function updateApplicantStatusAction(Request $request, $id)
     {
-        try{
+        try {
             $request->validate([
-                'status' => 'required|in:Pending,Accepted,Rejected',
+                'status' => 'in:Pending,Accepted,Rejected',
                 'remarks' => 'nullable|string',
                 'query_text' => 'nullable|string',
                 'response_text' => 'nullable|string',
@@ -441,8 +502,20 @@ class ApplicantController extends WebAppBaseController
             $status = ApplicationStatus::findOrFail($id);
 
             if ($request->hasFile('download_link')) {
-                $path = $request->file('download_link')->store('certificates', 'public');
-                $status->download_link = $path;
+                $file = $request->file('download_link');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $destination = public_path('uploads/certificates');
+
+                // Ensure directory exists 
+                if (!file_exists($destination)) {
+                    mkdir($destination, 0775, true);
+                }
+
+                // Move the uploaded file
+                $file->move($destination, $fileName);
+
+                // Save relative path for DB
+                $status->download_link = 'uploads/certificates/' . $fileName;
             }
 
             $status->update([
@@ -455,7 +528,6 @@ class ApplicantController extends WebAppBaseController
             ]);
 
             return $this->sendResponse([], 'Application status updated successfully.', '');
-
         } catch (\Exception $e) {
             return $this->sendErrorJson('', $e->getMessage());
         }

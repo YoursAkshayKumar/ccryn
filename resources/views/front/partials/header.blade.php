@@ -19,7 +19,7 @@
               <span class="avatar-item avatar overflow-hidden">
                 @php
                   if (Session::get('photo_url') != '') {
-                    $mediaImage = asset('storage').'/'. Session::get('photo_url');
+                    $mediaImage = asset('/'). Session::get('photo_url');
                   }else{
                     $mediaImage = url('assets/images/avatar/dummy-avatar.jpg');
                   }

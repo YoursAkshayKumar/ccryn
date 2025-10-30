@@ -21,10 +21,10 @@
                                         <!-- <i class="ri-money-dollar-circle-line fs-16 fw-medium"></i> -->
                                         <i class="bi bi-house-heart-fill fs-16 fw-medium"></i>
                                     </div>
-                                    <h6 class="mb-0 fs-13">Total Students</h6>
+                                    <h6 class="mb-0 fs-13">Total Applicants</h6>
                                 </div>
                                 <h4 class="fw-semibold fs-5 mb-0">
-                                    <span data-target="84573" data-duration="5" data-prefix="$">84573</span>
+                                    <!-- <span data-target="84573" data-duration="5">84573</span> -->
                                 </h4>
                             </div>
                             <!-- <div class="flex-shrink-0 text-end">
